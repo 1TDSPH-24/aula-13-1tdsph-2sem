@@ -17,7 +17,7 @@ export default function Produtos() {
             const data  = await response.json();
             setLista(data);
         }
-        const data = chamadaApi()
+        chamadaApi()
     },[])
 
   return (
