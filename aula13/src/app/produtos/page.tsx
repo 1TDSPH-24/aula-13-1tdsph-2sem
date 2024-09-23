@@ -1,21 +1,28 @@
+"use client"
+
 import Link from "next/link";
+import { TipoProduto } from "@/types";
+import { useEffect, useState } from "react";
 
 export default function Produtos() {
 
-    //Criar uma lista de objetos eletrônicos:
+    const [list, setList] = useState<TipoProduto[]>([]);
 
-    const lista = [
-        {id:1,nome: 'Celular', preco: 1500, estoque: 10},
-        {id:2,nome: 'Tablet', preco: 800, estoque: 5},
-        {id:3,nome: 'Notebook', preco: 2500, estoque: 3},
-        {id:4,nome: 'Smartwatch', preco: 300, estoque: 20},
-        {id:5,nome: 'Fone de ouvido', preco: 200, estoque:15},
-    ];
+    useEffect(() => {
+        
+        const chamadaApi = async () => {
+
+            const response = await fetch('http://localhost:3000/api');
+            const data = await response.json();
+            setList(data);
+        }
+        chamadaApi();
+    }, [])
 
   return (
     <div>
         <h1>Produtos</h1>
-        <table>
+        <table className="table_custom">
             <thead>
                 <tr>
                     <th>Id</th>
@@ -26,19 +33,19 @@ export default function Produtos() {
                 </tr>
             </thead>
             <tbody>
-                {lista.map((produto) => (
+                {list.map((produto) => (
                     <tr key={produto.id}>
                         <td>{produto.id}</td>
                         <td>{produto.nome}</td>
                         <td>{produto.preco}</td>
                         <td>{produto.estoque}</td>
-                        <td> <Link href={`/produtos/produto/${produto.id}`}>Editar</Link> </td>
+                        <td><Link href={`/produtos/produto/${produto.id}`}>Editar</Link></td>
                     </tr>
                     ))}
             </tbody>
             <tfoot>
                 <tr>
-                    <td colSpan={5}>Total de produtos: {lista.length}</td>
+                    <td colSpan={5}>Total de produtos: {list.length}</td>
                 </tr>
             </tfoot>
         </table>
