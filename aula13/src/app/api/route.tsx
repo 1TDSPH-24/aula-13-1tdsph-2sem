@@ -5,5 +5,5 @@ export async function GET(){
     const file = await fs.readFile(process.cwd() + '/src/data/base.json','utf-8');
     const produtos = JSON.parse(file);
 
-    return NextResponse.json(produtos);
+    return NextResponse.json(produtos)
 }
