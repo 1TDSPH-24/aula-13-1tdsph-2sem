@@ -1,16 +1,23 @@
+"use client"
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { TipoProduto } from "../type";
 
 export default function Produtos() {
+    
+    const[lista, setLista]= useState<TipoProduto[]>([])
 
     //Criar uma lista de objetos eletrônicos:
+    useEffect(() =>{
+        const chamadaApi = async ()=>{
+            const response = await fetch("http://localhost:3000/api");
+            const data = await response.json();
+            console.log(data);
+            setLista(data);
+        }
+        chamadaApi();
 
-    const lista = [
-        {id:1,nome: 'Celular', preco: 1500, estoque: 10},
-        {id:2,nome: 'Tablet', preco: 800, estoque: 5},
-        {id:3,nome: 'Notebook', preco: 2500, estoque: 3},
-        {id:4,nome: 'Smartwatch', preco: 300, estoque: 20},
-        {id:5,nome: 'Fone de ouvido', preco: 200, estoque:15},
-    ];
+},[]);
 
   return (
     <div>
